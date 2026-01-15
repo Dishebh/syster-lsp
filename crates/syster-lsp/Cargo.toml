@@ -1,0 +1,25 @@
+[package]
+name = "syster-lsp"
+version = "0.1.8-alpha"
+edition = "2024"
+authors = ["jade-codes"]
+license = "MIT"
+repository = "https://github.com/jade-codes/syster-lsp"
+description = "Language Server Protocol implementation for SysML v2"
+
+[[bin]]
+name = "syster-lsp"
+path = "src/main.rs"
+
+[dependencies]
+syster-base = { git = "https://github.com/jade-codes/syster-base.git", branch = "main" }
+async-lsp = { version = "0.2", features = ["tokio", "tracing"] }
+tokio = { version = "1", features = ["full"] }
+tokio-util = { version = "0.7", features = ["compat"] }
+futures = "0.3"
+tower = "0.5"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+percent-encoding = "2.3"
