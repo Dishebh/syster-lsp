@@ -1,4 +1,4 @@
-use crate::server::tests::test_helpers::{create_server, create_server_with_stdlib};
+use crate::server::tests::test_helpers::create_server;
 use crate::server::LspServer;
 use async_lsp::lsp_types::{
     DiagnosticSeverity, HoverContents, MarkedString, Position, PrepareRenameResponse, Url,
