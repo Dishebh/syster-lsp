@@ -17,9 +17,6 @@ static STDLIB_WORKSPACE: OnceLock<Workspace<SyntaxFile>> = OnceLock::new();
 fn get_stdlib_workspace() -> &'static Workspace<SyntaxFile> {
     STDLIB_WORKSPACE.get_or_init(|| {
         let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .unwrap()
-            .join("syster-base")
             .join("sysml.library");
 
         let mut workspace: Workspace<SyntaxFile> = Workspace::new();
@@ -39,9 +36,6 @@ fn test_server_initialization() {
 
     // Load stdlib for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let stdlib_loader = syster::project::StdLibLoader::with_path(stdlib_path);
     stdlib_loader
@@ -72,9 +66,6 @@ fn test_server_initialization() {
 fn test_ensure_workspace_loaded() {
     // Create server with explicit stdlib path for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let mut server = LspServer::with_config(true, Some(stdlib_path));
 
@@ -127,9 +118,6 @@ fn test_ensure_workspace_loaded() {
 fn test_hover_on_cross_file_symbol() {
     // Create server with explicit stdlib path for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let mut server = LspServer::with_config(true, Some(stdlib_path));
 
@@ -229,9 +217,6 @@ fn test_stdlib_symbols_present() {
 
     // Load stdlib for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let stdlib_loader = syster::project::StdLibLoader::with_path(stdlib_path);
     stdlib_loader
@@ -303,9 +288,6 @@ fn test_symbol_resolution_after_population() {
 
     // Load stdlib for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let stdlib_loader = syster::project::StdLibLoader::with_path(stdlib_path);
     stdlib_loader
@@ -841,9 +823,6 @@ fn test_timing_with_stdlib_loaded() {
 
     // Create server with stdlib
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let mut server = syster_lsp::LspServer::with_config(true, Some(stdlib_path.clone()));
 
@@ -1062,9 +1041,6 @@ fn test_lsp_hover_isq_temperature_difference_value() {
 
     // Load stdlib
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let stdlib_loader = syster::project::StdLibLoader::with_path(stdlib_path.clone());
     stdlib_loader
@@ -1195,9 +1171,6 @@ fn test_lsp_hover_with_auto_discovered_stdlib() {
     // but stdlib was loaded from target/release/sysml.library
     // These are DIFFERENT paths to the SAME logical file!
     let user_opened_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library")
         .join("Domain Libraries")
         .join("Quantities and Units")
@@ -1461,9 +1434,6 @@ fn test_hover_no_duplicates_with_stdlib_after_updates() {
     };
 
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let mut server = LspServer::with_config(true, Some(stdlib_path));
 
@@ -1919,9 +1889,6 @@ fn test_hover_isq_massvalue() {
 
     // Create server with explicit stdlib path for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
     let mut server = LspServer::with_config(true, Some(stdlib_path));
 
@@ -2007,9 +1974,6 @@ fn test_hover_isq_massvalue() {
 fn test_hover_isq_massvalue_extension_stdlib() {
     // Use the stdlib path from syster-base
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
 
     println!("Using stdlib path: {stdlib_path:?}");
@@ -2083,9 +2047,6 @@ fn test_semantic_tokens_for_requirement_derivation_file() {
 
     // Create server with explicit stdlib path
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
 
     let mut server = LspServer::with_config(true, Some(stdlib_path.clone()));
@@ -2168,9 +2129,6 @@ fn test_semantic_tokens_via_lsp_for_stdlib_file() {
 
     // Create server with explicit stdlib path
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .unwrap()
-        .join("syster-base")
         .join("sysml.library");
 
     let mut server = LspServer::with_config(true, Some(stdlib_path.clone()));
