@@ -5,7 +5,6 @@ Language Server Protocol implementation for SysML v2 and KerML.
 ## Components
 
 - `crates/syster-lsp` - Rust LSP server binary
-- `editors/vscode` - VS Code extension
 
 ## Features
 
@@ -23,24 +22,15 @@ Language Server Protocol implementation for SysML v2 and KerML.
 
 ## Building
 
-### LSP Server
-
 ```bash
 cargo build --release -p syster-lsp
 ```
 
-### VS Code Extension
+## Usage
 
-```bash
-cd editors/vscode
-npm install
-npm run compile
-npm run package
-```
+The LSP server binary can be used with any editor that supports the Language Server Protocol.
 
-## Installation
-
-Install the VS Code extension from the marketplace or build from source.
+For VS Code integration, see the [vscode-lsp extension](https://github.com/jade-codes/syster/tree/main/editors/vscode-lsp).
 
 ## License
 
