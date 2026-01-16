@@ -35,7 +35,7 @@ fn get_stdlib_workspace() -> &'static Workspace<SyntaxFile> {
 #[test]
 fn test_server_initialization() {
     // This test explicitly loads stdlib to test initialization
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Load stdlib for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -225,7 +225,7 @@ fn test_hover_on_cross_file_symbol() {
 #[test]
 fn test_stdlib_symbols_present() {
     // This test explicitly loads stdlib to verify symbols
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Load stdlib for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -274,7 +274,7 @@ fn test_stdlib_symbols_present() {
 
 #[test]
 fn test_document_lifecycle() {
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Create a test document
     let test_uri = async_lsp::lsp_types::Url::parse("file:///test.sysml").unwrap();
@@ -299,7 +299,7 @@ package TestPackage {
 #[test]
 fn test_symbol_resolution_after_population() {
     // This test explicitly loads stdlib to test resolution
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Load stdlib for testing
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -337,7 +337,7 @@ fn test_symbol_resolution_after_population() {
 
 #[test]
 fn test_cross_file_resolution() {
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Create first file with a definition
     let file1_uri = async_lsp::lsp_types::Url::parse("file:///file1.sysml").unwrap();
@@ -417,7 +417,7 @@ package AnotherPackage {
 
 #[test]
 fn test_cancel_document_operations() {
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
     let path = PathBuf::from("/test.sysml");
 
     // First call creates a new token
@@ -446,7 +446,7 @@ fn test_cancel_document_operations() {
 
 #[test]
 fn test_cancel_operations_per_document() {
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
     let path_a = PathBuf::from("/a.sysml");
     let path_b = PathBuf::from("/b.sysml");
 
@@ -472,7 +472,7 @@ fn test_cancel_operations_per_document() {
 
 #[test]
 fn test_get_document_cancel_token() {
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
     let path = PathBuf::from("/test.sysml");
 
     // Initially no token exists
@@ -496,7 +496,7 @@ fn test_get_document_cancel_token() {
 async fn test_cancellation_stops_async_work() {
     use tokio::time::{Duration, timeout};
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
     let path = PathBuf::from("/test.sysml");
 
     // Get a token for this document
@@ -538,7 +538,7 @@ fn test_rapid_changes_then_format() {
     use std::time::Instant;
     use tokio_util::sync::CancellationToken;
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Create a test document
     let test_uri = async_lsp::lsp_types::Url::parse("file:///test.sysml").unwrap();
@@ -642,7 +642,7 @@ fn test_interleaved_changes_and_format() {
     use std::time::Instant;
     use tokio_util::sync::CancellationToken;
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Create a test document with poor formatting
     let test_uri = async_lsp::lsp_types::Url::parse("file:///test2.sysml").unwrap();
@@ -729,7 +729,7 @@ fn test_parse_timing_breakdown() {
     );
 
     // Now test open_document directly (full document replacement)
-    let mut server = syster_lsp::LspServer::new();
+    let mut server = syster_lsp::LspServer::with_config(false, None);
     let test_uri = async_lsp::lsp_types::Url::parse("file:///test.sysml").unwrap();
 
     // Open document first
@@ -1058,7 +1058,7 @@ fn test_lsp_hover_isq_temperature_difference_value() {
     use syster_lsp::LspServer;
 
     // Create LSP server
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // Load stdlib
     let stdlib_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -1170,7 +1170,7 @@ fn test_lsp_hover_with_auto_discovered_stdlib() {
     println!("Using stdlib from: {stdlib_path:?}");
 
     // Create LSP server and set up stdlib explicitly at production path
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
     let stdlib_loader = syster::project::StdLibLoader::with_path(stdlib_path.clone());
     stdlib_loader
         .load(server.workspace_mut())
@@ -1269,7 +1269,7 @@ fn test_hover_no_duplicates_after_file_update() {
         HoverContents, MarkedString, Position, TextDocumentContentChangeEvent, Url,
     };
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     let file_path = PathBuf::from("/test/hover_duplicates.sysml");
     let uri = Url::from_file_path(&file_path).unwrap();
@@ -1373,7 +1373,7 @@ fn test_hover_referenced_by_count_stable_after_updates() {
         HoverContents, MarkedString, Position, TextDocumentContentChangeEvent, Url,
     };
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     let file_path = PathBuf::from("/test/reference_count.sysml");
     let uri = Url::from_file_path(&file_path).unwrap();
@@ -1555,7 +1555,7 @@ fn test_hover_import_references_cleared_when_import_removed() {
         HoverContents, MarkedString, Position, TextDocumentContentChangeEvent, Url,
     };
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // File A: defines a type
     let file_a_path = PathBuf::from("/test/types.sysml");
@@ -1670,7 +1670,7 @@ package Usage {
 fn test_semantic_tokens_updated_when_import_removed() {
     use async_lsp::lsp_types::{SemanticTokensResult, TextDocumentContentChangeEvent, Url};
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // File A: defines a type
     let file_a_path = PathBuf::from("/test/defs.sysml");
@@ -1748,7 +1748,7 @@ fn test_hover_on_usage_site_cleared_when_import_removed() {
         HoverContents, MarkedString, Position, TextDocumentContentChangeEvent, Url,
     };
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // File A: defines a type
     let file_a_path = PathBuf::from("/test/engine_def.sysml");
@@ -1858,7 +1858,7 @@ package Car {
 fn test_hover_shows_import_based_references() {
     use async_lsp::lsp_types::{HoverContents, MarkedString, Position, Url};
 
-    let mut server = LspServer::new();
+    let mut server = LspServer::with_config(false, None);
 
     // File with type definition
     let types_path = PathBuf::from("/test/base_types.sysml");
